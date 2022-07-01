@@ -39,6 +39,13 @@
             "yiisoft/yii2-composer": true
         }
     },
+    "scripts": {
+        "@rbac" : "php yii migrate --migrationPath=@yii/rbac/migrations/",
+        "message": "php yii message @common/messages/messages.php",
+        "filemigration" : "php yii migrate --migrationPath=vendor/pendalf89/yii2-filemanager/migrations",
+        "codecept_tes": "vendor/bin/codecept run unit -- -c common",
+        "vagrant_codecept_test": "vagrant ssh -- 'cd /app && /usr/bin/php /app/vendor/bin/codecept run unit -- -c common'"
+    },
     "repositories": [
         {
             "type": "composer",

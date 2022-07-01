@@ -18,8 +18,8 @@ if required_plugins_installed
 end
 
 domains = {
-  frontend: 'y2aa-frontend.test',
-  backend:  'y2aa-backend.test'
+  frontend: 'yii2-shop',
+  backend:  'admin.yii2-shop'
 }
 
 config = {

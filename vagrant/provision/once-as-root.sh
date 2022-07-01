@@ -34,7 +34,7 @@ apt-get update && apt-get upgrade -y
 add-apt-repository -y ppa:ondrej/php
 
 info "Install additional software"
-apt-get install -y php7.4-curl php7.4-cli php7.4-intl php7.4-mysqlnd php7.4-gd php7.4-fpm php7.4-mbstring php7.4-xml unzip nginx mysql-server-5.7 php7.4-xdebug
+apt-get install -y php7.4-curl php7.4-cli php7.4-intl php7.4-mysqlnd php7.4-gd php7.4-fpm php7.4-mbstring php7.4-xml unzip nginx mysql-server-5.7 php7.4-xdebug php7.4-memcached memcached
 
 info "Configure MySQL"
 sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
@@ -66,8 +66,8 @@ ln -s /app/vagrant/nginx/app.conf /etc/nginx/sites-enabled/app.conf
 echo "Done!"
 
 info "Initailize databases for MySQL"
-mysql -uroot <<< "CREATE DATABASE yii2advanced"
-mysql -uroot <<< "CREATE DATABASE yii2advanced_test"
+mysql -uroot <<< "CREATE DATABASE shop"
+mysql -uroot <<< "CREATE DATABASE shop_test"
 echo "Done!"
 
 info "Install composer"
