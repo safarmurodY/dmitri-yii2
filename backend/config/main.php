@@ -52,14 +52,15 @@ return [
         'urlManager' => function(){
             return Yii::$app->get('backendUrlManager');
         },
-        'as access' => [
-            'class' => 'yii\filters\AccessControl',
-            'except' => ['site/login', 'site/error'],
-            'rules' => [
-                [
-                    'allow' => true,
-                    'roles' => ['@'],
-                ],
+
+    ],
+    'as access' => [
+        'class' => 'yii\filters\AccessControl',
+        'except' => ['site/login', 'site/error'],
+        'rules' => [
+            [
+                'allow' => true,
+                'roles' => ['@'],
             ],
         ],
     ],
