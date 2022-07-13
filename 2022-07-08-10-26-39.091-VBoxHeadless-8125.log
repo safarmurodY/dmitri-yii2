@@ -1,0 +1,12 @@
+Log created: 2022-07-08T10:26:39.913602000Z
+Process ID:  8125 (0x1fbd)
+Parent PID:  7438 (0x1d0e)
+Executable:  /usr/lib/virtualbox/VBoxHeadless
+Arg[0]: /usr/lib/virtualbox/VBoxHeadless
+Arg[1]: --comment
+Arg[2]: shop
+Arg[3]: --startvm
+Arg[4]: 06dd36d0-39f2-4285-b0d0-aaca4d02c581
+Arg[5]: --vrde
+Arg[6]: config
+AddRef: illegal refcnt=3221225469 state=2
