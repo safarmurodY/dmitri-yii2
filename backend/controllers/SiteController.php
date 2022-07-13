@@ -62,6 +62,7 @@ class SiteController extends Controller
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
+        $this->layout = 'main-login';
 
 //        $this->layout = 'blank';
 

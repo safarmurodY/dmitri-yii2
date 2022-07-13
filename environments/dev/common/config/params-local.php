@@ -2,7 +2,7 @@
 
 return [
     'cookieValidationKey' => '',
-    'cookieDomain' => '.yii2-shop',
-    'frontendHostInfo' => 'http://yii2-shop',
-    'backendHostInfo' => 'http://admin.yii2-shop',
+    'cookieDomain' => '.yii2-shop.loc',
+    'frontendHostInfo' => 'http://yii2-shop.loc',
+    'backendHostInfo' => 'http://admin.yii2-shop.loc',
 ];

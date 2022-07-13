@@ -30,6 +30,54 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_ACTIVE = 10;
 
 
+    public static function requestSignup(string $username, string $email, string $password): self
+    {
+        $user = new static();
+        $user->username = $username;
+        $user->email = $email;
+        $user->setPassword($password);
+        $user->created_at = time();
+        $user->status = self::STATUS_INACTIVE;
+        $user->generateAuthKey();
+        $user->generateEmailVerificationToken();
+        return $user;
+    }
+
+    public function confirmSignup():void
+    {
+        if (!$this->isInactive())
+            throw new \DomainException('User is already active.');
+
+        $this->status = self::STATUS_ACTIVE;
+        $this->verification_token = null;
+    }
+    public function isActive(): bool
+    {
+        return $this->status === self::STATUS_ACTIVE;
+    }
+
+    public function isInactive(): bool
+    {
+        return $this->status === self::STATUS_INACTIVE;
+    }
+
+    public function requestPasswordReset(): void
+    {
+        if (!empty($this->password_reset_token) && self::isPasswordResetTokenValid($this->password_reset_token))
+            throw new \DomainException('Reset requested');
+
+        $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
+    }
+
+    public function resetPassword($password): void
+    {
+        if (empty($this->password_reset_token))
+            throw new \DomainException('Reset not requested');
+
+        $this->setPassword($password);
+        $this->password_reset_token = null;
+
+    }
     /**
      * {@inheritdoc}
      */
@@ -140,6 +188,11 @@ class User extends ActiveRecord implements IdentityInterface
     public function getId()
     {
         return $this->getPrimaryKey();
+    }
+
+    public function getUsernamee()
+    {
+        return $this->username;
     }
 
     /**
