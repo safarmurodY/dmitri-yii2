@@ -19,6 +19,7 @@ class SignupTest extends \Codeception\Test\Unit
         $this->assertNotEquals($password, $user->password_hash);
         $this->assertNotEmpty($user->created_at);
         $this->assertNotEmpty($user->auth_key);
-        $this->assertTrue($user->isActive());
+        $this->assertTrue($user->isInactive());
+        $this->assertFalse($user->isActive());
     }
 }

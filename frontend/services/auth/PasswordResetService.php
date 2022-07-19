@@ -32,8 +32,6 @@ class PasswordResetService
 
         $send = $this
             ->mailer
-//            $this
-//            ->mailer
             ->compose(
                 ['html' => 'passwordResetToken-html', 'text' => 'passwordResetToken-text'],
                 ['user' => $user]
