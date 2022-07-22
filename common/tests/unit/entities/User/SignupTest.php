@@ -8,6 +8,7 @@ class SignupTest extends \Codeception\Test\Unit
 {
     public function testSuccess()
     {
+        \Yii::$app->params['adminEmail'] = 'admin@example.com';
         $user = User::requestSignup(
             $username = 'username',
             $email = 'email@site.com',

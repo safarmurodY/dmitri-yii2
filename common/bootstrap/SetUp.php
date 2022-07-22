@@ -20,6 +20,7 @@ class SetUp implements \yii\base\BootstrapInterface
         $container->setSingleton(MailerInterface::class, function () use ($app){
             return $app->mailer;
         });
+
         $container->setSingleton(ContactService::class, [], [
             $app->params['adminEmail'],
 //            Instance::of(MailerInterface::class)
@@ -27,5 +28,8 @@ class SetUp implements \yii\base\BootstrapInterface
 //        $container->setSingleton(PasswordResetService::class, function () use ($app) {
 //            return new PasswordResetService([\Yii::$app->params['supportEmail'] => \Yii::$app->name . ' robot']);
 //        });
+
+
+//        $container->setSingleton()
     }
 }
