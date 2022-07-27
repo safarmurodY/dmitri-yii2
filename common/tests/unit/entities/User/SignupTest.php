@@ -2,7 +2,7 @@
 
 namespace common\tests\unit\entities\User;
 
-use common\models\User;
+use User;
 
 class SignupTest extends \Codeception\Test\Unit
 {
