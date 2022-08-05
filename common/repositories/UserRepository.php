@@ -2,7 +2,7 @@
 
 namespace common\repositories;
 
-use common\models\User;
+use User;
 
 class UserRepository
 {
@@ -18,6 +18,16 @@ class UserRepository
     public function getByPasswordResetToken(string $token): User
     {
         return $this->getBy(['password_reset_token' => $token]);
+    }
+
+    public function findByNetworkIdentity($network, $identity): User
+    {
+        return User::find()->joinWith('networks n')->andWhere(['n.network' => $network, 'n.identity' => $identity])->one();
+    }
+
+    public function findByUsernameOrEmail($value): User
+    {
+        return User::find()->andWhere(['or', ['username' => $value], ['email' => $value]])->one();
     }
 
     public function existByPasswordResetToken($token): bool
@@ -38,6 +48,7 @@ class UserRepository
         }
         return $user;
     }
+
 
 
 }
