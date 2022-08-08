@@ -14,18 +14,35 @@ use yii\db\ActiveRecord;
 class Network extends ActiveRecord
 {
 
-    public static function create($network, $identity):self
+    public static function create($network, $identity, $user_id):self
     {
         Assert::notEmpty($network);
         Assert::notEmpty($identity);
+
         $item = new static();
         $item->network = $network;
-        $item->identity = $identity;
+        $item->identity = (string)$identity;
+        $item->user_id = $user_id;
         return  $item;
     }
 
     public static function tableName()
     {
         return '{{%user_networks}}';
+    }
+
+    public function rules()
+    {
+        return [
+            [['user_id'], 'integer'],
+            ['identity', 'string', 'max' => 255],
+            ['network', 'string', 'max' => 16],
+
+        ];
+    }
+
+    public function isFor($network, $identity)
+    {
+        return $this->network == $network && $this->identity == $identity;
     }
 }

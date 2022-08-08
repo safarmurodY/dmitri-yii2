@@ -2,16 +2,16 @@
 
 namespace frontend\controllers;
 
-use common\models\LoginForm;
-use frontend\models\ContactForm;
-use frontend\models\PasswordResetRequestForm;
-use frontend\models\ResendVerificationEmailForm;
-use frontend\models\ResetPasswordForm;
-use frontend\models\SignupForm;
-use frontend\models\VerifyEmailForm;
-use frontend\services\auth\PasswordResetService;
-use frontend\services\auth\SignupService;
-use frontend\services\contact\ContactService;
+use shop\forms\auth\LoginForm;
+use shop\forms\auth\PasswordResetRequestForm;
+use shop\forms\auth\ResendVerificationEmailForm;
+use shop\forms\auth\ResetPasswordForm;
+use shop\forms\auth\SignupForm;
+use shop\forms\auth\VerifyEmailForm;
+use shop\forms\ContactForm;
+use shop\services\auth\PasswordResetService;
+use shop\services\auth\SignupService;
+use shop\services\ContactService;
 use Yii;
 use yii\base\InvalidArgumentException;
 use yii\filters\AccessControl;
@@ -204,7 +204,7 @@ class SiteController extends Controller
         try {
             $this->signupService->confirm($token);
             Yii::$app->session->setFlash('success', Yii::t('app', 'Confirmed'));
-            return $this->redirect('site/login');
+            return $this->redirect('/login');
         }catch (\DomainException $e){
             Yii::$app->errorHandler->logException($e);
             Yii::$app->session->setFlash('error', $e->getMessage());

@@ -1,8 +1,10 @@
 <?php
 
-namespace shop\entities\user;
+namespace common\models;
 
 use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
+use lhs\Yii2SaveRelationsBehavior\SaveRelationsTrait;
+use shop\entities\user\Network;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -27,6 +29,8 @@ use yii\web\IdentityInterface;
  */
 class User extends ActiveRecord implements IdentityInterface
 {
+//    public $networks;
+//    use SaveRelationsTrait;
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
@@ -61,10 +65,20 @@ class User extends ActiveRecord implements IdentityInterface
         $user->updated_at = time();
         $user->status = self::STATUS_ACTIVE;
         $user->generateAuthKey();
-//        $user->networks = [
-//            Network::create($network, $identity)
-//        ];
+//        $user->networks = [Network::create($network, $identity)];
         return $user;
+    }
+
+    public function attachNetwork($user_id, $network, $identity)
+    {
+        /** @var Network[] $networks */
+        $networks = $this->networks;
+        foreach ($networks as $current) {
+            if ($current->isFor($network, $identity)){
+                throw new \DomainException('Network already attached');
+            }
+        }
+        return Network::create($network, $identity, $user_id);
     }
 
     public function getNetworks()
@@ -76,19 +90,19 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             TimestampBehavior::class,
-//            [
-//                'class' => SaveRelationsBehavior::class,
-//                'relations' => ['networks'],
-//            ],
+            'saveRelations' => [
+                'class' => SaveRelationsBehavior::class,
+                'relations' => ['networks'],
+            ],
         ];
     }
 
-//    public function transactions()
-//    {
-//        return [
-//            self::SCENARIO_DEFAULT => self::OP_ALL,
-//        ];
-//    }
+    public function transactions()
+    {
+        return [
+            self::SCENARIO_DEFAULT => self::OP_ALL,
+        ];
+    }
 
     public function isActive(): bool
     {
@@ -143,6 +157,7 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
+            [['networks'], 'safe']
         ];
     }
 

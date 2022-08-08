@@ -2,9 +2,9 @@
 
 namespace frontend\controllers\auth;
 
-use frontend\models\PasswordResetRequestForm;
-use frontend\models\ResetPasswordForm;
-use frontend\services\auth\PasswordResetService;
+use shop\forms\auth\PasswordResetRequestForm;
+use shop\forms\auth\ResetPasswordForm;
+use shop\services\auth\PasswordResetService;
 use Yii;
 use yii\web\Controller;
 

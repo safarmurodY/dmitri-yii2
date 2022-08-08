@@ -2,8 +2,8 @@
 
 namespace frontend\controllers\auth;
 
-use frontend\models\SignupForm;
-use frontend\services\auth\SignupService;
+use shop\forms\auth\SignupForm;
+use shop\services\auth\SignupService;
 use Yii;
 use yii\filters\AccessControl;
 

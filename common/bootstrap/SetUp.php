@@ -2,10 +2,7 @@
 
 namespace common\bootstrap;
 
-use frontend\services\auth\PasswordResetService;
-use frontend\services\contact\ContactService;
-use yii\base\Application;
-use yii\di\Instance;
+use shop\services\ContactService;
 use yii\mail\MailerInterface;
 
 class SetUp implements \yii\base\BootstrapInterface

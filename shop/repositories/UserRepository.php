@@ -1,8 +1,9 @@
 <?php
 
-namespace common\repositories;
+namespace shop\repositories;
 
-use User;
+use common\models\User;
+use shop\entities\user\Network;
 
 class UserRepository
 {
@@ -15,12 +16,17 @@ class UserRepository
         return $this->getBy(['email' => $email]);
     }
 
+    public function get($id)
+    {
+        return $this->getBy(['id' => $id]);
+    }
+
     public function getByPasswordResetToken(string $token): User
     {
         return $this->getBy(['password_reset_token' => $token]);
     }
 
-    public function findByNetworkIdentity($network, $identity): User
+    public function findByNetworkIdentity($network, $identity): ?User
     {
         return User::find()->joinWith('networks n')->andWhere(['n.network' => $network, 'n.identity' => $identity])->one();
     }
@@ -38,6 +44,12 @@ class UserRepository
     public function save(User $user):void
     {
         if (!$user->save())
+            throw new \RuntimeException('Saving error.');
+    }
+
+    public function saveNetwork(Network $network): void
+    {
+        if (!$network->save())
             throw new \RuntimeException('Saving error.');
     }
 

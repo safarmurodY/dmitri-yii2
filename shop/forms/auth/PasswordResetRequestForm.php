@@ -1,8 +1,8 @@
 <?php
 
-namespace frontend\models;
+namespace shop\forms\auth;
 
-use User;
+use common\models\User;
 use yii\base\Model;
 
 /**
@@ -12,7 +12,7 @@ class PasswordResetRequestForm extends Model
 {
     public $email;
     /**
-     * {@inheritdoc}
+     * {@inheritdoc}safarmurod20014@gmail.com
      */
     public function rules(): array
     {
@@ -21,7 +21,7 @@ class PasswordResetRequestForm extends Model
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'exist',
-                'targetClass' => '\User',
+                'targetClass' => 'shop\entities\user\User',
                 'filter' => ['status' => User::STATUS_ACTIVE],
                 'message' => 'There is no user with this email address.'
             ],

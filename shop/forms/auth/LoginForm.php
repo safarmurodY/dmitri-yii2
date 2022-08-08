@@ -1,8 +1,8 @@
 <?php
 
-namespace common\models;
+namespace shop\forms\auth;
 
-use User;
+use common\models\User;
 use Yii;
 use yii\base\Model;
 

@@ -6,6 +6,7 @@ return [
     'senderName' => 'Example.com mailer',
     'user.passwordResetTokenExpire' => 3600,
     'user.passwordMinLength' => 4,
+    'user.rememberMeDuration' => 3600*24,
     'cookieValidationKey' => 'bUMx6LhN4v7zsYjgUcMEUrKarDXJIwfx2we2daxea32e2',
     'cookieDomain' => '.yii2-shop.loc',
     'frontendHostInfo' => 'http://yii2-shop.loc',
