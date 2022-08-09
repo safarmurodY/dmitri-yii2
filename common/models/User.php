@@ -36,6 +36,25 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_ACTIVE = 10;
 
 
+    public static function create(string $username, string $email, string $password)
+    {
+        $user = new static();
+        $user->username = $username;
+        $user->email = $email;
+        $user->setPassword(!empty($password) ? $password : \Yii::$app->security->generateRandomString());
+        $user->created_at = time();
+        $user->status = self::STATUS_ACTIVE;
+        $user->generateAuthKey();
+        return $user;
+    }
+
+    public function edit($username, $email)
+    {
+        $this->username = $username;
+        $this->email = $email;
+        $this->updated_at = time();
+    }
+
     public static function requestSignup(string $username, string $email, string $password): self
     {
         $user = new static();
@@ -58,18 +77,18 @@ class User extends ActiveRecord implements IdentityInterface
         $this->verification_token = null;
     }
 
-    public static function signupByNetwork(): self
+    public static function signupByNetwork($network, $identity): self
     {
         $user = new User();
         $user->created_at = time();
         $user->updated_at = time();
         $user->status = self::STATUS_ACTIVE;
         $user->generateAuthKey();
-//        $user->networks = [Network::create($network, $identity)];
+        $user->networks = [Network::create($network, $identity)];
         return $user;
     }
 
-    public function attachNetwork($user_id, $network, $identity)
+    public function attachNetwork($network, $identity)
     {
         /** @var Network[] $networks */
         $networks = $this->networks;
@@ -78,7 +97,8 @@ class User extends ActiveRecord implements IdentityInterface
                 throw new \DomainException('Network already attached');
             }
         }
-        return Network::create($network, $identity, $user_id);
+        $networks[] = Network::create($network, $identity);
+        $this->networks = $networks;
     }
 
     public function getNetworks()
@@ -86,16 +106,17 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->hasMany(Network::class, ['user_id' => 'id']);
     }
 
-    public function attachBehaviors($behaviors)
+    public function behaviors()
     {
         return [
             TimestampBehavior::class,
-            'saveRelations' => [
+            [
                 'class' => SaveRelationsBehavior::class,
                 'relations' => ['networks'],
             ],
         ];
     }
+
 
     public function transactions()
     {
@@ -142,22 +163,12 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
-    {
-        return [
-            TimestampBehavior::className(),
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
-            [['networks'], 'safe']
+//            [['networks'], 'safe']
         ];
     }
 

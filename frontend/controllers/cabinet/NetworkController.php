@@ -22,7 +22,7 @@ class NetworkController extends Controller
     public function actions()
     {
         return [
-            'auth' => [
+            'attach' => [
                 'class' => AuthAction::class,
                 'successCallback' => [$this, 'onAuthSuccess'],
                 'successUrl' => Url::to(['cabinet/default/index'])

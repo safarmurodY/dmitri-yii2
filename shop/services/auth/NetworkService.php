@@ -23,11 +23,11 @@ class NetworkService
         if ($user = $this->users->findByNetworkIdentity($network, $identity)){
             return $user;
         }
-        $user = User::signupByNetwork();
+        $user = User::signupByNetwork($network, $identity);
         $this->users->save($user);
-        $netWorks = Network::create($network, $identity, $user->id);
-
-        $this->users->saveNetwork($netWorks);
+//        $netWorks = Network::create($network, $identity, $user->id);
+//
+//        $this->users->saveNetwork($netWorks);
 
         return $user;
     }
@@ -35,11 +35,11 @@ class NetworkService
     public function attach($user_id, $network, $identity)
     {
         if ($this->users->findByNetworkIdentity($network, $identity)){
-            throw new \DomainException('network attached');
+            throw new \DomainException('network already attached');
         }
         $user = $this->users->get($user_id);
-        $networkModel = $user->attachNetwork($user_id, $network, $identity);
-        $this->users->saveNetwork($networkModel);
+        $user->attachNetwork($network, $identity);
+        $this->users->save($user);
     }
 
 }
