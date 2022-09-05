@@ -1,1 +1,2 @@
 # codeception file to run tests from shop
+namespace: shop\tests

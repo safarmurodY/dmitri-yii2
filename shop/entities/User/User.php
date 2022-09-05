@@ -1,6 +1,6 @@
 <?php
 
-namespace shop\entities\user;
+namespace shop\entities\User;
 
 use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
 use yii\base\NotSupportedException;

@@ -1,5 +1,5 @@
 <?php
-namespace shop\entities\user;
+namespace shop\entities\User;
 
 use Webmozart\Assert\Assert;
 use yii\db\ActiveRecord;
