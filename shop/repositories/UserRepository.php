@@ -3,7 +3,7 @@
 namespace shop\repositories;
 
 use common\models\User;
-use shop\entities\user\Network;
+use shop\entities\User\Network;
 
 class UserRepository
 {

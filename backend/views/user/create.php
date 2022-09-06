@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model \shop\forms\manage\UserCreateForm */
+/* @var $model \shop\forms\manage\User\UserCreateForm */
 /* @var $form yii\widgets\ActiveForm */
 
 $this->title = 'Create User';

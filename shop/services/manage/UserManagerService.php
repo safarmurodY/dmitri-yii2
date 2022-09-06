@@ -3,8 +3,8 @@
 namespace shop\services\manage;
 
 use common\models\User;
-use shop\forms\manage\UserCreateForm;
-use shop\forms\manage\UserEditForm;
+use shop\forms\manage\User\UserCreateForm;
+use shop\forms\manage\User\UserEditForm;
 use shop\repositories\UserRepository;
 
 class UserManagerService

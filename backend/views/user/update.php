@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model \shop\forms\manage\UserEditForm */
+/* @var $model \shop\forms\manage\User\UserEditForm */
 /* @var $form yii\widgets\ActiveForm */
 /** @var $user \common\models\User */
 

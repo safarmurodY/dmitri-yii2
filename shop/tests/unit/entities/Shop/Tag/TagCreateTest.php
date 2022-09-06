@@ -3,6 +3,7 @@
 namespace shop\tests\unit\entities\Shop\Tag;
 
 use Codeception\Test\Unit;
+use shop\entities\Shop\Tag;
 
 class TagCreateTest extends Unit
 {
