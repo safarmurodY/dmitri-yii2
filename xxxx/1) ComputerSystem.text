@@ -1,0 +1,25 @@
+A modern general-purpose computer system consists of one or more CPUs and a number of device controllers connected
+through a common bus that provides access to shared memory
+________      ________           ________        _________
+| CPU  |     | Disk C |         | USB C |       | Video A |
+```|````      ```|````           ```|````       `````|`````
+    \             \                /                /
+     ```````````````````|```````````````````````````
+                        |
+                    |````````|
+                    | MEMORY |
+                    ``````````
+
+-- Each device controller is in charge of specific type of device
+-- The CPU and the device controllers can execute concurrently(simultaneously), competing for memory cycles
+-- To ensure orderly access to the shared memory, a memory controller is provided whose function is to synchronize access to the  memory
+
+
+! Important terms
+    1) Bootstrap program: -> The initial program that runs when a computer is powered up or rebooted
+                          -> It is stored in the ROM
+                          -> it must know how to load the OS and start executing that system.
+                          -> it must locate and load into memory OS Kernel.
+    2) Interrupt: -> The occurrence of an event is usually signalled by an Interrupt from Hardware or Software.
+                  -> Hardware may trigger an interrupt at any time by sending a signal  to the CPU, usually by the way of the system bus.
+    3) System Call (Monitor call): -> Software may trigger an interrupt by executing a special operation called System Call.

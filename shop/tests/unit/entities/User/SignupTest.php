@@ -1,6 +1,6 @@
 <?php
 
-namespace common\tests\unit\entities\User;
+namespace shop\tests\unit\entities\User;
 
 
 

@@ -1,0 +1,23 @@
+
+
+            ___________
+           | Register  |`          | Expensive      Smaller    |
+           ```|`````|````          |    But         Size       |
+            ___________`           |   Fast                    |
+           |   Cache   |`          |                           |    VOLATILE - Loses it's contents
+           ```|`````|````          |                           |                when power is removed
+           _______________`        |                           |
+  (RAM)   |  Main Memory  |`       |                           |
+           `````|`````|`````       |                           |
+          __________________`      ____________________        _________________________
+         |  Electronic Disk |`     |    -Cost per              |
+          `````|`````|```````      |      bit                  |
+          __________________`      |    increases              |
+         |  Magnetic Disk   |`     |                    Larger |    NONE VOLATILE - Retains it's contents
+          `````|`````|```````      |                    Size   |                    even power is removed
+          __________________`      ______________              |
+         |   Optical Disk   |`     |    Access                 |
+          `````|`````|```````      |    time                   |
+          __________________`      |    increases              |
+         |  Magnetic Tapes  |`     |                           |
+          ```````````````````      |                           |

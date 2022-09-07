@@ -1,4 +1,3 @@
-# codeception file to run tests from shop
 namespace: shop\tests
 actor_suffix: Tester
 paths:
@@ -13,4 +12,4 @@ settings:
 modules:
   config:
     Yii2:
-      configFile: 'config/codeception-local.php'
+      configFile: '../common/config/codeception-local.php'
