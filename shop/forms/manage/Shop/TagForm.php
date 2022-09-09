@@ -4,8 +4,9 @@ namespace shop\forms\manage\Shop;
 
 use shop\entities\Shop\Tag;
 use shop\validators\SlugValidator;
+use yii\base\Model;
 
-class TagForm extends \yii\base\Model
+class TagForm extends Model
 {
     public $name;
     public $slug;

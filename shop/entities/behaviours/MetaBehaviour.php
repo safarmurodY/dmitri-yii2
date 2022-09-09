@@ -27,19 +27,17 @@ class MetaBehaviour extends Behavior
 
     public function onAfterFind(Event $event): void
     {
-        /** @var Brand $brand */
-        $brand = $event->sender;
-        $meta = Json::decode($brand->getAttribute($this->jsonAttribute));
-        $brand->{$this->attribute} = new Meta($meta['title'], $meta['description'], $meta['keywords']);
+        $model = $event->sender;
+        $meta = Json::decode($model->getAttribute($this->jsonAttribute));
+        $model->{$this->attribute} = new Meta($meta['title'], $meta['description'], $meta['keywords']);
     }
     public function onBeforeSave(Event $event): void
     {
-        /** @var Brand $brand */
-        $brand = $event->sender;
-        $brand->setAttribute($this->jsonAttribute, Json::encode([
-            'title' => $brand->{$this->attribute}->title,
-            'description' => $brand->{$this->attribute}->description,
-            'keywords' => $brand->{$this->attribute}->keywords,
+        $model = $event->sender;
+        $model->setAttribute($this->jsonAttribute, Json::encode([
+            'title' => $model->{$this->attribute}->title,
+            'description' => $model->{$this->attribute}->description,
+            'keywords' => $model->{$this->attribute}->keywords,
         ]));
     }
 }

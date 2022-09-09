@@ -25,7 +25,8 @@ class MetaForm extends Model
     {
         return [
             [['title', 'description', 'keywords'], 'required'],
-            [['title', 'description', 'keywords'], 'string', 'max' => 255],
+            [['title', 'description'], 'string', 'max' => 255],
+            [['keywords'], 'string'],
         ];
     }
 

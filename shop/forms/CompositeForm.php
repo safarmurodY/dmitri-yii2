@@ -5,10 +5,10 @@ namespace shop\forms;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
 
-abstract class CompositeForm extends \yii\base\Model
+abstract class CompositeForm extends Model
 {
     /**
-     *
+     * @var Model[]|array[]
      */
     private $forms = [];
 
@@ -18,43 +18,40 @@ abstract class CompositeForm extends \yii\base\Model
     {
         $success = parent::load($data, $formName);
         foreach ($this->forms as $name => $form) {
-            if (is_array($form)){
-                foreach ($form as $itemName => $itemForm) {
-                    $success = $this->loadInternal($data, $itemForm, $formName, $itemName) && $success;
-                }
-            }else {
+            if (is_array($form)) {
+                $success = Model::loadMultiple($form, $data, $formName ? null : $name) && $success;
+            } else {
                 $success = $form->load($data, $formName !== '' ? null : $name) && $success;
             }
         }
         return $success;
     }
 
-    private function loadInternal(array $data, Model $form, $formName, $name)
-    {
-        return $form->load($data, $formName == '' ? null : $name);
-    }
 
-    public function validate($attributeNames = null, $clearErrors = true)
+    /**
+     * @param $attributeNames
+     * @param $clearErrors
+     * @return bool
+     * @throws \Exception
+     */
+    public function validate($attributeNames = null, $clearErrors = true): bool
     {
         $parentNames = array_filter($attributeNames, 'is_string');
         $success = parent::validate($parentNames, $clearErrors);
-        foreach ($this->forms as $name => $item) {
-            if (is_array($item)){
-                foreach ($item as $itemName => $itemForm) {
-                    $innerNames = ArrayHelper::getValue($attributeNames, $itemName);
-                    $success = $itemForm->validate($innerNames, $clearErrors) && $success;
-                }
-            }else {
+        foreach ($this->forms as $name => $form) {
+            if (is_array($form)) {
+                $success = Model::validateMultiple($form) && $success;
+            } else {
                 $innerNames = ArrayHelper::getValue($attributeNames, $name);
-                $success = $item->validate($innerNames, $clearErrors) && $success;
-            } 
+                $success = $form->validate($innerNames, $clearErrors) && $success;
+            }
         }
         return $success;
     }
 
     public function __get($name)
     {
-        if (isset($this->forms[$name])){
+        if (isset($this->forms[$name])) {
             return $this->forms[$name];
         }
         return parent::__get($name);
@@ -62,9 +59,9 @@ abstract class CompositeForm extends \yii\base\Model
 
     public function __set($name, $value)
     {
-        if (in_array($name, $this->internalForms(), true)){
+        if (in_array($name, $this->internalForms(), true)) {
             $this->forms[$name] = $value;
-        }else{
+        } else {
             parent::__set($name, $value);
         }
     }
@@ -72,5 +69,11 @@ abstract class CompositeForm extends \yii\base\Model
     public function __isset($name)
     {
         return isset($this->forms[$name]) || parent::__isset($name);
+    }
+
+
+    private function loadInternal(array $data, Model $form, $formName, $name)
+    {
+        return $form->load($data, $formName == '' ? null : $name);
     }
 }
