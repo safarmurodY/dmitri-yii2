@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "username": "cube",
+    "auth_key": "f8XZsGGAgORjCOG9ozzDqJRA3DKvN-Z6",
+    "password_hash": "$2y$13$gkoCDzvp69ZFvhJDVHWpe.W5xG3RQGCMFAKlao7wcPcuiIqWhZsVu",
+    "password_reset_token": null,
+    "email": "safarmurod20014@gmail.com",
+    "status": 10,
+    "created_at": 1657175108,
+    "updated_at": 1659961034,
+    "verification_token": "z68y0JWgAUBGWfn0r1KKhBrM4D5rGeH1_1657175108"
+  },
+  {
+    "id": 2,
+    "username": "Next",
+    "auth_key": "iGnpZU2VSODh3SVnC2ybKTIobvcvmq4b",
+    "password_hash": "$2y$13$LCj9GgjtS5RVd37K2ZgoxuNiAkq0zEDALbm4FpxlAW1uqGmNRJS..",
+    "password_reset_token": null,
+    "email": "sfriesen@jenkins.info",
+    "status": 10,
+    "created_at": 1659960765,
+    "updated_at": 1659960765,
+    "verification_token": "xXR1ueXSo306HQMLyNnuN3b7oGvzVJcJ_1659960765"
+  }
+]

@@ -6,14 +6,13 @@ use shop\entities\Shop\Characteristic;
 use shop\entities\Shop\Product\Product;
 use shop\forms\CompositeForm;
 use shop\forms\manage\MetaForm;
-use shop\forms\manage\Shop\TagForm;
 
 /**
  * @property PriceFom $price
  * @property MetaForm $meta
  * @property CategoriesForm $categories
  * @property PhotosForm $photos
- * @property TagForm $tags
+ * @property TagsForm $tags
  * @property ValueForm[] $values
  */
 class ProductCreateForm extends CompositeForm
@@ -28,7 +27,7 @@ class ProductCreateForm extends CompositeForm
         $this->meta = new MetaForm();
         $this->categories = new CategoriesForm();
         $this->photos = new PhotosForm();
-        $this->tags = new TagForm();
+        $this->tags = new TagsForm();
         $this->values = array_map(function (Characteristic $characteristic){
             return new ValueForm($characteristic);
         }, Characteristic::find()->orderBy('sort')->all());

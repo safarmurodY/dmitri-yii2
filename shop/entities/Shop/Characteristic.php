@@ -45,7 +45,27 @@ class Characteristic extends ActiveRecord
         $this->sort = $sort;
     }
 
-    public static function tableName():string
+    public function isString(): bool
+    {
+        return $this->type === self::TYPE_STRING;
+    }
+
+    public function isInteger(): bool
+    {
+        return $this->type === self::TYPE_INTEGER;
+    }
+
+    public function isFloat(): bool
+    {
+        return $this->type === self::TYPE_FLOAT;
+    }
+
+    public function isSelect(): bool
+    {
+        return count($this->variants) > 0;
+    }
+
+    public static function tableName(): string
     {
         return '{{%shop_characteristics}}';
     }

@@ -3,32 +3,45 @@
 namespace shop\services\manage\Shop;
 
 use shop\entities\Meta;
+use shop\entities\Shop\Tag;
+use shop\forms\manage\Shop\Product\CategoriesForm;
 use shop\forms\manage\Shop\Product\PhotosForm;
 use shop\forms\manage\Shop\Product\ProductCreateForm;
+use shop\forms\manage\Shop\Product\ProductEditForm;
 use shop\repositories\Shop\BrandRepository;
 use shop\repositories\Shop\CategoryRepository;
 use shop\repositories\Shop\ProductRepository;
 use shop\entities\Shop\Product\Product;
+use shop\repositories\Shop\TagRepository;
+use shop\services\TransactionManager;
 
 class ProductManageService
 {
     private ProductRepository $products;
     private BrandRepository $brands;
     private CategoryRepository $categories;
+    private TagRepository $tags;
+    private TransactionManager $transaction;
 
     /**
      * @param ProductRepository $products
      * @param BrandRepository $brands
      * @param CategoryRepository $categories
+     * @param TagRepository $tags
+     * @param TransactionManager $transaction
      */
     public function __construct(
         ProductRepository  $products,
         BrandRepository    $brands,
-        CategoryRepository $categories
+        CategoryRepository $categories,
+        TagRepository $tags,
+        TransactionManager $transaction
     ) {
         $this->products = $products;
         $this->brands = $brands;
         $this->categories = $categories;
+        $this->tags = $tags;
+        $this->transaction = $transaction;
     }
 
     public function create(ProductCreateForm $form)
@@ -44,7 +57,7 @@ class ProductManageService
             new Meta(
                 $form->meta->title,
                 $form->meta->description,
-                $form->meta->keywords,
+                $form->meta->keywords
             ),
         );
         $product->setPrice($form->price->new, $form->price->old);
@@ -61,12 +74,71 @@ class ProductManageService
             $product->addPhoto($file);
         }
 
-        foreach ($form->tags->name as $item) {
-            
+        foreach ($form->tags->existing as $tagId) {
+            $tag = $this->tags->get($tagId);
+            $product->assignTag($tag->id);
         }
 
-        $this->products->save($product);
+        $this->transaction->wrap(function () use ($product, $form){
+            foreach ($form->tags->newNames as $tagName) {
+                if (!$tag = $this->tags->findByName($tagName)){
+                    $tag = Tag::create($tagName, $tagName);
+                    $this->tags->save($tag);
+                }
+                $product->assignTag($tag->id);
+            }
+            $this->products->save($product);
+        });
+
+
         return $product;
+    }
+
+    public function edit($id, ProductEditForm $form): void
+    {
+        $product = $this->products->get($id);
+        $brand = $this->brands->get($form->brandId);
+        $product->edit(
+            $brand->id,
+            $form->code,
+            $form->name,
+            new Meta(
+                $form->meta->title,
+                $form->meta->description,
+                $form->meta->keywords
+            )
+        );
+
+        foreach ($form->values as $value) {
+            $product->setValue($value->id, $value->value);
+        }
+
+        $product->revokeTags();
+
+        foreach ($form->tags->existing as $tagId) {
+            $tag = $this->tags->get($tagId);
+            $product->assignTag($tag->id);
+        }
+        $this->transaction->wrap(function () use ($product, $form){
+            foreach ($form->tags->newNames as $tagName) {
+                if (!$tag = $this->tags->findByName($tagName)){
+                    $tag = Tag::create($tagName, $tagName);
+                    $this->tags->save($tag);
+                }
+                $product->assignTag($tag->id);
+            }
+            $this->products->save($product);
+        });
+
+    }
+
+
+    public function changeCategories($id, CategoriesForm $form): void
+    {
+        $product = $this->products->get($id);
+        $category = $this->categories->get($form->main);
+        $product->changeMainCategory($category->id);
+        $product->save($product);
     }
 
     public function addPhotos($id, PhotosForm $form): void

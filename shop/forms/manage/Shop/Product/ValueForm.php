@@ -3,6 +3,7 @@
 namespace shop\forms\manage\Shop\Product;
 
 use shop\entities\Shop\Characteristic;
+use shop\entities\Shop\Product\Value;
 use yii\base\Model;
 
 /**

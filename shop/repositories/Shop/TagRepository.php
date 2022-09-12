@@ -8,9 +8,24 @@ use yii\db\StaleObjectException;
 
 class TagRepository
 {
+
     public function get($id):Tag
     {
         if (!$tag = Tag::findOne($id)){
+            throw new NotFoundException('Tag not found');
+        }
+        return $tag;
+    }
+
+
+    public function findByName($name)
+    {
+        return $this->getBy(['name' => $name]);
+    }
+
+    public function getBy(array $config)
+    {
+        if (!$tag = Tag::find()->where($config)->one()){
             throw new NotFoundException('Tag not found');
         }
         return $tag;

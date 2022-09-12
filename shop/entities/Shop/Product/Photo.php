@@ -24,7 +24,7 @@ class Photo extends ActiveRecord
         $this->sort = $sort;
     }
 
-    public function isEqualT($id): bool
+    public function isEqualTo($id): bool
     {
         return $this->id == $id;
     }
