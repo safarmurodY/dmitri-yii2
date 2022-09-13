@@ -5,22 +5,28 @@ namespace shop\services\manage\Shop;
 use shop\entities\Shop\Characteristic;
 use shop\forms\manage\Shop\CharacteristicForm;
 use shop\repositories\Shop\CharacteristicRepository;
+use shop\repositories\Shop\ProductRepository;
 
 class CharacteristicService
 {
 
     private CharacteristicRepository $characteristics;
+    private ProductRepository $products;
 
     /**
      * @param CharacteristicRepository $characteristics
+     * @param ProductRepository $products
      */
-    public function __construct(CharacteristicRepository $characteristics)
-    {
+    public function __construct(
+        CharacteristicRepository $characteristics,
+        ProductRepository        $products
+    ) {
         $this->characteristics = $characteristics;
+        $this->products = $products;
     }
 
 
-    public function create(CharacteristicForm $form)
+    public function create(CharacteristicForm $form): Characteristic
     {
         $characteristic = Characteristic::create(
             $form->name,
@@ -33,6 +39,7 @@ class CharacteristicService
         $this->characteristics->save($characteristic);
         return $characteristic;
     }
+
     public function edit($id, CharacteristicForm $form)
     {
         $characteristic = $this->characteristics->get($id);

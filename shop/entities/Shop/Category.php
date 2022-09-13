@@ -14,6 +14,9 @@ use yii\db\ActiveRecord;
  * @property string $slug
  * @property string $title
  * @property string $description
+ * @property integer $left
+ * @property integer $right
+ * @property integer $depth
  * @property Meta $meta
  *
  * @property Category $parent
@@ -52,7 +55,12 @@ class Category extends ActiveRecord
     {
         return [
             MetaBehaviour::class,
-            NestedSetsBehavior::class,
+            [
+                'class' => NestedSetsBehavior::class,
+                'leftAttribute' => 'left',
+                'rightAttribute' => 'right',
+
+            ]
         ];
     }
 

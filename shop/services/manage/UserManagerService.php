@@ -40,4 +40,10 @@ class UserManagerService
         $this->repository->save($user);
     }
 
+    public function remove($id)
+    {
+        $user = $this->repository->get($id);
+        $this->repository->remove($user);
+    }
+
 }

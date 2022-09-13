@@ -11,4 +11,6 @@ return [
     'cookieDomain' => '.yii2-shop.loc',
     'frontendHostInfo' => 'http://yii2-shop.loc',
     'backendHostInfo' => 'http://admin.yii2-shop.loc',
+    'staticHostInfo' => 'http://static.yii2-shop.loc',
+    'staticPath' => dirname(__DIR__) . '/../static'
 ];

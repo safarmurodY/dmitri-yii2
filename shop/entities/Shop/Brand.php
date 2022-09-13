@@ -43,6 +43,11 @@ class Brand extends \yii\db\ActiveRecord
     {
         return [
             MetaBehaviour::class,
+//            [
+//                'class' =>
+//                'attribute' => 'meta',
+//                'jsonAttribute' => 'meta_json'
+//            ]
         ];
     }
 

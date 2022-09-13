@@ -3,7 +3,9 @@
 namespace shop\repositories;
 
 use common\models\User;
+use shop\entities\Shop\Brand;
 use shop\entities\User\Network;
+use yii\db\StaleObjectException;
 
 class UserRepository
 {
@@ -61,6 +63,15 @@ class UserRepository
         return $user;
     }
 
+    /**
+     * @throws StaleObjectException
+     */
+    public function remove(User $user)
+    {
+        if (!$user->delete()){
+            throw new \RuntimeException('Unable to remove brand');
+        }
+    }
 
 
 }

@@ -8,12 +8,13 @@ use yii\base\Behavior;
 use yii\base\Event;
 use yii\db\ActiveRecord;
 use yii\db\BaseActiveRecord;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 
 class MetaBehaviour extends Behavior
 {
     public $attribute = 'meta';
-    public $jsonAttribute = 'json_attribute';
+    public $jsonAttribute = 'meta_json';
 
     public function events():array
     {
@@ -29,7 +30,11 @@ class MetaBehaviour extends Behavior
     {
         $model = $event->sender;
         $meta = Json::decode($model->getAttribute($this->jsonAttribute));
-        $model->{$this->attribute} = new Meta($meta['title'], $meta['description'], $meta['keywords']);
+        $model->{$this->attribute} = new Meta(
+            ArrayHelper::getValue($meta, 'title'),
+            ArrayHelper::getValue($meta, 'description'),
+            ArrayHelper::getValue($meta, 'keywords')
+        );
     }
     public function onBeforeSave(Event $event): void
     {

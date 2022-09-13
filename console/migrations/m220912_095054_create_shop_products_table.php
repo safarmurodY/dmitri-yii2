@@ -9,7 +9,7 @@ use yii\db\Migration;
  * - `{{%shop_categories}}`
  * - `{{%shop_brands}}`
  */
-class m220912_095612_create_shop_products_table extends Migration
+class m220912_095054_create_shop_products_table extends Migration
 {
     /**
      * {@inheritdoc}
@@ -23,6 +23,7 @@ class m220912_095612_create_shop_products_table extends Migration
             'created_at' => $this->integer()->unsigned()->notNull(),
             'code' => $this->string()->notNull(),
             'name' => $this->string()->notNull(),
+            'description' => $this->text(),
             'price_old' => $this->integer(),
             'price_new' => $this->integer(),
             'rating' => $this->decimal(3, 2),
@@ -49,8 +50,7 @@ class m220912_095612_create_shop_products_table extends Migration
             '{{%shop_products}}',
             'category_id',
             '{{%shop_categories}}',
-            'id',
-            'CASCADE'
+            'id'
         );
 
         // creates index for column `brand_id`
@@ -66,9 +66,9 @@ class m220912_095612_create_shop_products_table extends Migration
             '{{%shop_products}}',
             'brand_id',
             '{{%shop_brands}}',
-            'id',
-            'CASCADE'
+            'id'
         );
+
     }
 
     /**
@@ -99,6 +99,18 @@ class m220912_095612_create_shop_products_table extends Migration
             '{{%idx-shop_products-brand_id}}',
             '{{%shop_products}}'
         );
+        // drops foreign key for table `{{%shop_photos}}`
+        $this->dropForeignKey(
+            '{{%fk-shop_products-main_photo_id}}',
+            '{{%shop_products}}'
+        );
+
+        // drops index for column `main_photo_id`
+        $this->dropIndex(
+            '{{%idx-shop_products-main_photo_id}}',
+            '{{%shop_products}}'
+        );
+
 
         $this->dropTable('{{%shop_products}}');
     }

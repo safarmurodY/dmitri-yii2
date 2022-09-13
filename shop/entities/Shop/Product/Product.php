@@ -17,6 +17,7 @@ use yii\web\UploadedFile;
  * @property integer $created_at
  * @property string $code
  * @property string $name
+ * @property string $description
  * @property integer $category_id
  * @property integer $brand_id
  * @property integer $price_old
@@ -32,19 +33,21 @@ use yii\web\UploadedFile;
  * @property Modification[] $modifications
  * @property Value[] $values
  * @property Photo[] $photos
+ * @property Photo $mainPhoto
  * @property Review[] $reviews
  */
 class Product extends ActiveRecord
 {
     public $meta;
 
-    public static function create($brandId, $categoryId, $code, $name, Meta $meta): self
+    public static function create($brandId, $categoryId, $code, $name, $description, Meta $meta): self
     {
         $product = new static();
         $product->brand_id = $brandId;
         $product->category_id = $categoryId;
         $product->code = $code;
         $product->name = $name;
+        $product->description = $description;
         $product->meta = $meta;
         $product->created_at = time();
         return $product;
@@ -97,7 +100,7 @@ class Product extends ActiveRecord
     {
         $photos = $this->photos;
         $photos[] = Photo::create($file);
-        $this->setPhotos($photos);
+        $this->updatePhotos($photos);
     }
 
     public function removePhoto($id): void
@@ -106,7 +109,7 @@ class Product extends ActiveRecord
         foreach ($photos as $i => $photo) {
             if ($photo->isEqualTo($id)) {
                 unset($photos[$i]);
-                $this->setPhotos($photos);
+                $this->updatePhotos($photos);
                 return;
             }
         }
@@ -122,10 +125,12 @@ class Product extends ActiveRecord
     {
         $photos = $this->photos;
         foreach ($photos as $i => $photo) {
-            if ($photo->isEqualTo($id) && $prev = $photos[$i - 1] ?? null) {
-                $photos[$i] = $prev;
-                $photos[$i - 1] = $photo;
-                $this->setPhotos($photos);
+            if ($photo->isEqualTo($id)) {
+                if ($prev = $photos[$i - 1] ?? null) {
+                    $photos[$i] = $prev;
+                    $photos[$i - 1] = $photo;
+                    $this->updatePhotos($photos);
+                }
                 return;
             }
         }
@@ -136,10 +141,12 @@ class Product extends ActiveRecord
     {
         $photos = $this->photos;
         foreach ($photos as $i => $photo) {
-            if ($photo->isEqualTo($id) && $next = $photos[$i + 1] ?? null) {
-                $photos[$i] = $next;
-                $photos[$i + 1] = $photo;
-                $this->setPhotos($photos);
+            if ($photo->isEqualTo($id)) {
+                if ($next = $photos[$i + 1] ?? null) {
+                    $photos[$i] = $next;
+                    $photos[$i + 1] = $photo;
+                    $this->updatePhotos($photos);
+                }
                 return;
             }
         }
@@ -147,12 +154,13 @@ class Product extends ActiveRecord
     }
 
 
-    private function setPhotos(array $photos): void
+    private function updatePhotos(array $photos): void
     {
         foreach ($photos as $i => $photo) {
             $photo->setSort($i);
         }
         $this->photos = $photos;
+        $this->populateRelation('mainPhoto', reset($photos));
     }
 
     //Characteristics
@@ -209,6 +217,19 @@ class Product extends ActiveRecord
         foreach ($modifications as $i => $modification) {
             if ($modification->isEqualTo($id)) {
                 $modification->edit($code, $name, $price);
+                $this->modifications = $modifications;
+                return;
+            }
+        }
+        throw new \DomainException('Modification not found');
+    }
+
+    public function removeModification($id)
+    {
+        $modifications = $this->modifications;
+        foreach ($modifications as $i => $modification) {
+            if ($modification->isEqualTo($id)){
+                unset($modifications[$i]);
                 $this->modifications = $modifications;
                 return;
             }
@@ -282,7 +303,7 @@ class Product extends ActiveRecord
     {
         $reviews = $this->reviews;
         $reviews[] = Review::create($userId, $vote, $text);
-        $this->setReviews($reviews);
+        $this->updateReviews($reviews);
     }
 
     public function editReview($id, $vote, $text): void
@@ -313,7 +334,7 @@ class Product extends ActiveRecord
         foreach ($reviews as $i => $review) {
             if ($review->isEqualTo($id)) {
                 unset($reviews[$i]);
-                $this->setReviews($reviews);
+                $this->updateReviews($reviews);
                 return;
             }
         }
@@ -323,17 +344,17 @@ class Product extends ActiveRecord
     private function doWithReview($id, $callback)
     {
         $reviews = $this->reviews;
-        foreach ($reviews as $i => $review) {
+        foreach ($reviews as $review) {
             if ($review->isEqualTo($id)) {
                 $callback($review);
-                $this->setReviews($reviews);
+                $this->updateReviews($reviews);
                 return;
             }
         }
         throw new \DomainException('Review not found');
     }
 
-    private function setReviews(array $reviews)
+    private function updateReviews(array $reviews)
     {
         $amount = 0;
         $total = 0;
@@ -377,6 +398,10 @@ class Product extends ActiveRecord
     {
         return $this->hasMany(Photo::class, ['product_id' => 'id'])->orderBy('sort');
     }
+    public function getMainPhoto(): ActiveQuery
+    {
+        return $this->hasOne(Photo::class, ['id' => 'main_photo_id']);
+    }
 
     public function getTagAssignments(): ActiveQuery
     {
@@ -415,7 +440,7 @@ class Product extends ActiveRecord
             MetaBehaviour::class,
             [
                 'class' => SaveRelationsBehavior::class,
-                'relations' => ['categoryAssignments', 'tagAssignments', 'relatedAssignments', 'values', 'photos'],
+                'relations' => ['categoryAssignments', 'tagAssignments', 'relatedAssignments', 'values', 'photos', 'reviews'],
             ],
         ];
     }
@@ -425,6 +450,15 @@ class Product extends ActiveRecord
         return [
             self::SCENARIO_DEFAULT => self::OP_ALL,
         ];
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        $related = $this->getRelatedRecords();
+        if (array_key_exists('mainPhoto', $related)){
+            $this->updateAttributes(['main_photo_id' => $related['mainPhoto'] ? $related['mainPhoto']->id : null]);
+        }
+        parent::afterSave($insert, $changedAttributes);
     }
 
 

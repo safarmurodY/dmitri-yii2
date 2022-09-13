@@ -27,7 +27,7 @@ class TagForm extends Model
     {
         return [
             [['name', 'slug'], 'required'],
-            [['name', 'slug'], 'max' => 255],
+            [['name', 'slug'], 'string', 'max' => 255],
             ['slug', SlugValidator::class],
             [['name', 'slug'], 'unique', 'targetClass' => Tag::class, 'filter' => $this->_tag ? ['<>', 'id', $this->_tag->id] : null],
         ];
