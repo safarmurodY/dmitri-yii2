@@ -2,10 +2,12 @@
 
 namespace shop\forms\manage\Shop\Product;
 
+use shop\entities\Shop\Brand;
 use shop\entities\Shop\Characteristic;
 use shop\entities\Shop\Product\Product;
 use shop\forms\CompositeForm;
 use shop\forms\manage\MetaForm;
+use yii\helpers\ArrayHelper;
 
 /**
  * @property PriceFom $price
@@ -47,6 +49,10 @@ class ProductCreateForm extends CompositeForm
     }
 
 
+    public function brandList():array
+    {
+        return ArrayHelper::map(Brand::find()->orderBy('name')->asArray()->all(), 'id', 'name');
+    }
 
     protected function internalForms(): array
     {

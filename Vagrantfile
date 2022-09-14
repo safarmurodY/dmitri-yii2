@@ -20,7 +20,7 @@ end
 domains = {
   frontend: 'yii2-shop',
   backend:  'admin.yii2-shop',
-  static: 'static.shop'
+  static: 'static.yii2-shop'
 }
 
 config = {

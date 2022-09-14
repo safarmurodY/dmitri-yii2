@@ -5,6 +5,7 @@ namespace backend\controllers\shop;
 use backend\forms\Shop\ProductSearch;
 use shop\entities\Shop\Brand;
 use shop\entities\Shop\Product\Product;
+use shop\forms\manage\Shop\Product\PriceFom;
 use shop\forms\manage\Shop\Product\ProductCreateForm;
 use shop\forms\manage\Shop\Product\ProductEditForm;
 use shop\services\manage\Shop\ProductManageService;
@@ -99,9 +100,34 @@ class ProductController extends Controller
         ]);
     }
 
+
+    public function actionPrice($id)
+    {
+        $product = $this->findModel($id);
+        $form = new PriceFom($product);
+        if ($form->load($this->request->post()) && $form->validate()){
+            try {
+                $this->service->changePrice($product->id, $form);
+                return $this->redirect(['view', 'id' => $product->id]);
+            } catch (\DomainException $e) {
+                \Yii::$app->errorHandler->logException($e);
+                \Yii::$app->session->setFlash('error', $e->getMessage());
+            }
+        }
+        return $this->render('price', [
+            'model' => $form,
+            'product' => $product,
+        ]);
+    }
+
     public function actionDelete($id)
     {
-
+        try {
+            $this->service->remove($id);
+        } catch (\DomainException $e) {
+            \Yii::$app->errorHandler->logException($e);
+            \Yii::$app->session->setFlash('error', $e->getMessage());
+        }
     }
 
     public function actionDeletePhoto($id, $photoId)
@@ -114,11 +140,6 @@ class ProductController extends Controller
         }
     }
 
-
-    public function actionPrice($id)
-    {
-
-    }
 
     public function actionMovePhotoUp($id, $photo_id)
     {

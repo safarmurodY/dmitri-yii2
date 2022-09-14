@@ -431,7 +431,7 @@ class Product extends ActiveRecord
 
     public static function tableName()
     {
-        return '{{%shop_product}}';
+        return '{{%shop_products}}';
     }
 
     public function behaviors(): array
