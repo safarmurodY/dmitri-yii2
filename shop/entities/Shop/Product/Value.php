@@ -9,6 +9,8 @@ use yii\db\ActiveRecord;
 /**
  * @property integer $characteristic_id
  * @property integer $value
+ *
+ * @property Characteristic $characteristic
  */
 
 class Value extends ActiveRecord

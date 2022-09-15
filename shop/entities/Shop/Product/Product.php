@@ -440,7 +440,7 @@ class Product extends ActiveRecord
             MetaBehaviour::class,
             [
                 'class' => SaveRelationsBehavior::class,
-                'relations' => ['categoryAssignments', 'tagAssignments', 'relatedAssignments', 'values', 'photos', 'reviews'],
+                'relations' => ['categoryAssignments', 'tagAssignments', 'relatedAssignments', 'modifications', 'values', 'photos', 'reviews'],
             ],
         ];
     }
@@ -455,10 +455,10 @@ class Product extends ActiveRecord
     public function afterSave($insert, $changedAttributes)
     {
         $related = $this->getRelatedRecords();
+        parent::afterSave($insert, $changedAttributes);
         if (array_key_exists('mainPhoto', $related)){
             $this->updateAttributes(['main_photo_id' => $related['mainPhoto'] ? $related['mainPhoto']->id : null]);
         }
-        parent::afterSave($insert, $changedAttributes);
     }
 
 

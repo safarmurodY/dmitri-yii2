@@ -4,11 +4,14 @@ namespace backend\controllers\shop;
 
 use backend\forms\Shop\ProductSearch;
 use shop\entities\Shop\Brand;
+use shop\entities\Shop\Product\Modification;
 use shop\entities\Shop\Product\Product;
+use shop\forms\manage\Shop\Product\PhotosForm;
 use shop\forms\manage\Shop\Product\PriceFom;
 use shop\forms\manage\Shop\Product\ProductCreateForm;
 use shop\forms\manage\Shop\Product\ProductEditForm;
 use shop\services\manage\Shop\ProductManageService;
+use yii\data\ActiveDataProvider;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -60,8 +63,31 @@ class ProductController extends Controller
     {
         $product = $this->findModel($id);
 
+        $modificationsProvider = new ActiveDataProvider([
+            'query' => $product->getModifications()->orderBy('name'),
+            'key' => function(Modification $modification) use ($product){
+                return [
+                    'product_id' => $product->id,
+                    'id' => $modification->id,
+                ];
+            },
+            'pagination' => false,
+        ]);
+        $photosForm = new PhotosForm();
+        if ($photosForm->load($this->request->post()) && $photosForm->validate()){
+            try {
+                $this->service->addPhotos($product->id, $photosForm);
+                return $this->redirect(['view', 'id' => $product->id]);
+            } catch (\DomainException $e) {
+                \Yii::$app->errorHandler->logException($e);
+                \Yii::$app->session->setFlash('error', $e->getMessage());
+            }
+        }
+
         return $this->render('view', [
             'product' => $product,
+            'modificationsProvider' => $modificationsProvider,
+            'photosForm' => $photosForm,
         ]);
     }
 
@@ -95,8 +121,9 @@ class ProductController extends Controller
                 \Yii::$app->session->setFlash('error', $e->getMessage());
             }
         }
-        return $this->render('create', [
-            'model' => $form
+        return $this->render('update', [
+            'model' => $form,
+            'product' => $product
         ]);
     }
 
@@ -130,10 +157,10 @@ class ProductController extends Controller
         }
     }
 
-    public function actionDeletePhoto($id, $photoId)
+    public function actionDeletePhoto($id, $photo_id)
     {
         try {
-            $this->service->removePhoto($id, $photoId);
+            $this->service->removePhoto($id, $photo_id);
         } catch (\DomainException $e) {
             \Yii::$app->errorHandler->logException($e);
             \Yii::$app->session->setFlash('error', $e->getMessage());

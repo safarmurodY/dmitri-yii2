@@ -25,6 +25,6 @@ class CategoryAssignment extends ActiveRecord
 
     public static function tableName()
     {
-        return '{{%shop_category_assignment}}';
+        return '{{%shop_category_assignments}}';
     }
 }

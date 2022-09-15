@@ -10,6 +10,7 @@ use yii\widgets\ActiveForm;
 $this->title = 'Create Product';
 $this->params['breadcrumbs'][] = ['label' => 'Products', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="product-create">
     <?php $form = ActiveForm::begin([

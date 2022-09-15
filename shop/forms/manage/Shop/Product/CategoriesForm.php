@@ -26,7 +26,7 @@ class CategoriesForm extends Model
         return [
             ['main', 'required'],
             ['main', 'integer'],
-            ['other', 'each', 'rule' => ['integer']],
+            ['others', 'each', 'rule' => ['integer']],
         ];
     }
     public function categoriesList(): array

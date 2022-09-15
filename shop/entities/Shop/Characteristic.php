@@ -72,7 +72,7 @@ class Characteristic extends ActiveRecord
 
     public function afterFind():void
     {
-        $this->variants = Json::decode($this->getAttribute('variants_json'));
+        $this->variants = array_filter(Json::decode($this->getAttribute('variants_json')));
         parent::afterFind();
     }
 

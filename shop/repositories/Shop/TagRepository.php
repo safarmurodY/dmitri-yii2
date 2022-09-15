@@ -18,9 +18,9 @@ class TagRepository
     }
 
 
-    public function findByName($name)
+    public function findByName($name): ?Tag
     {
-        return $this->getBy(['name' => $name]);
+        return Tag::findOne(['name' => $name]);
     }
 
     public function getBy(array $config)
