@@ -61,9 +61,10 @@ class ModificationController extends Controller
         ]);
     }
 
-    public function actionUpdate($product_id, $id)
+    public function actionUpdate($id, $product_id)
     {
         $product = $this->findModel($product_id);
+
         $modification = $product->getModification($id);
         $form = new ModificationForm($modification);
         if ($form->load($this->request->post()) && $form->validate()){

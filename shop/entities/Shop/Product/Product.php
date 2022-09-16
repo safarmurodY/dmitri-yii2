@@ -52,6 +52,14 @@ class Product extends ActiveRecord
         $product->created_at = time();
         return $product;
     }
+    public function edit($brandId, $code, $name, $description, Meta $meta): void
+    {
+        $this->brand_id = $brandId;
+        $this->code = $code;
+        $this->name = $name;
+        $this->description = $description;
+        $this->meta = $meta;
+    }
 
     public function setPrice($new, $old): void
     {
@@ -179,6 +187,7 @@ class Product extends ActiveRecord
     public function getValue($id): Value
     {
         $values = $this->values;
+
         foreach ($values as $val) {
             if ($val->isForCharacteristic($id)) {
                 return $val;

@@ -59,7 +59,6 @@ class Category extends ActiveRecord
                 'class' => NestedSetsBehavior::class,
                 'leftAttribute' => 'left',
                 'rightAttribute' => 'right',
-
             ]
         ];
     }

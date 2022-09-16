@@ -77,7 +77,7 @@ class ProductController extends Controller
         if ($photosForm->load($this->request->post()) && $photosForm->validate()){
             try {
                 $this->service->addPhotos($product->id, $photosForm);
-                return $this->redirect(['view', 'id' => $product->id]);
+                return $this->redirect(['view', 'id' => $product->id, '#' => 'photos']);
             } catch (\DomainException $e) {
                 \Yii::$app->errorHandler->logException($e);
                 \Yii::$app->session->setFlash('error', $e->getMessage());
@@ -155,6 +155,7 @@ class ProductController extends Controller
             \Yii::$app->errorHandler->logException($e);
             \Yii::$app->session->setFlash('error', $e->getMessage());
         }
+        return $this->redirect(['view', 'id' => $id, '#' => 'photos']);
     }
 
     public function actionDeletePhoto($id, $photo_id)
@@ -165,6 +166,7 @@ class ProductController extends Controller
             \Yii::$app->errorHandler->logException($e);
             \Yii::$app->session->setFlash('error', $e->getMessage());
         }
+        return $this->redirect(['view', 'id' => $id, '#' => 'photos']);
     }
 
 

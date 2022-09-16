@@ -9,6 +9,8 @@ return [
         '' => 'site/index',
         '<_a:login|logout>' => 'site/<_a>',
 
+        'shop/<controller>/<action>/<id>' => 'shop/<controller>/<action>',
+        'shop/<controller>/<action>' => 'shop/<controller>/<action>',
         '<_c:[\w\-]+>' => '<_c>/index',
         '<_c:[\w\-]+>/<id:\d+>' => '<_c>/view',
         '<_c:[\w\-]+>/<_a:[\w-]+>' => '<_c>/<_a>',

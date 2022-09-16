@@ -18,9 +18,9 @@ if required_plugins_installed
 end
 
 domains = {
-  frontend: 'yii2-shop',
-  backend:  'admin.yii2-shop',
-  static: 'static.yii2-shop'
+  frontend: 'yii2-shop.loc',
+  backend:  'admin.yii2-shop.loc',
+  static: 'static.yii2-shop.loc'
 }
 
 config = {

@@ -166,7 +166,7 @@ $this->params['breadcrumbs'][] = 'View';
                     </div>
                     <div>
                         <?= Html::a(
-                            Html::img($photo->getThmubFileUrl('file', 'thumb')),
+                            Html::img($photo->getThumbFileUrl('file', 'thumb')),
                             $photo->getUploadedFileUrl('file'),
                             ['class' => 'thumbnail', 'target' => '_blank']
                         ) ?>

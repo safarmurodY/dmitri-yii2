@@ -30,7 +30,7 @@ class Modification extends ActiveRecord
 
     public function isEqualTo($id): bool
     {
-        return $this->id === $id;
+        return $this->id == $id;
     }
 
     public function isCodeEqualTo($code): bool
