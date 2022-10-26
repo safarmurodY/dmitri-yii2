@@ -12,12 +12,16 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
+        '//fonts.googleapis.com/css?family=Open+Sans:400,400i,300,700',
         'css/site.css',
     ];
     public $js = [
+        'js/common.js',
     ];
     public $depends = [
+        'frontend\assets\FontAwesomeAsset',
         'yii\web\YiiAsset',
-        'yii\bootstrap4\BootstrapAsset',
+//        'yii\bootstrap\BootstrapAsset',
+        'yii\bootstrap\BootstrapPluginAsset'
     ];
 }

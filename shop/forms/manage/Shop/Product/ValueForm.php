@@ -18,7 +18,7 @@ class ValueForm extends Model
     public function __construct(Characteristic $characteristic, Value $value = null, $config = [])
     {
         if ($value) {
-            $this->value = $value;
+            $this->value = $value->value;
         }
         $this->_characterstic = $characteristic;
         parent::__construct($config);

@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\User;
 use shop\forms\auth\LoginForm;
 use Yii;
 use yii\filters\VerbFilter;
@@ -49,6 +50,13 @@ class SiteController extends Controller
     public function actionIndex()
     {
         return $this->render('index');
+    }
+
+    public function actionTest()
+    {
+        $user = User::findOne(1);
+        Yii::$app->user->login($user);
+        return $this->redirect(['/']);
     }
 
     /**

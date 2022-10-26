@@ -31,7 +31,11 @@ class CategoriesForm extends Model
     }
     public function categoriesList(): array
     {
-        return ArrayHelper::map(Category::find()->andWhere(['>', 'depth', 0])->orderBy('left')->asArray()->all(), 'id', function (array $category){
+        return ArrayHelper::map(Category::find()
+            ->andWhere(['>', 'depth', 0])
+            ->orderBy('left')
+            ->asArray()
+            ->all(), 'id', function (array $category){
             return ($category['depth'] > 1 ? str_repeat('-- ', $category['depth'] - 1). ' ' : '') . $category['name'];
         });
     }
