@@ -9,6 +9,7 @@ use yii\filters\AccessControl;
 
 class SignupController extends \yii\web\Controller
 {
+    public $layout = 'cabinet';
     private $service;
 
     public function __construct($id, $module, SignupService $service, $config = [])

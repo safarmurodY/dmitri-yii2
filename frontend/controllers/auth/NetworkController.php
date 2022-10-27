@@ -10,7 +10,7 @@ use yii\web\Controller;
 
 class NetworkController extends Controller
 {
-
+    public $layout = 'cabinet';
     private NetworkService $service;
     public function __construct($id, $module, NetworkService $service, $config = [])
     {
