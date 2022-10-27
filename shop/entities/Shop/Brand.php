@@ -34,6 +34,14 @@ class Brand extends \yii\db\ActiveRecord
         $this->meta = $meta;
     }
 
+    public function getSeoTile(): string
+    {
+        return $this->meta->title ?: $this->getHeadingTile();
+    }
+    public function getHeadingTile(): string
+    {
+        return $this->name;
+    }
     public static function tableName(): string
     {
         return '{{%shop_brands}}';

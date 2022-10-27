@@ -37,7 +37,7 @@
                 });
                 --></script>
         </aside>
-        <div id="content" class="col-sm-12">
+        <div id="content" class="col-sm-9">
             <?= $content ?>
         </div>
     </div>

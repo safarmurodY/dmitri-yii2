@@ -61,10 +61,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         'format' => 'raw',
                     ],
                     [
-                        'class' => ActionColumn::className(),
-                        'urlCreator' => function ($action, Product $model, $key, $index, $column) {
-                            return Url::toRoute([$action, 'id' => $model->id]);
-                        }
+                        'attribute' => 'status',
+                        'value' => function($model){
+                            return \shop\helpers\ProductHelper::statusLabel($model->status);
+                        },
+                        'filter' => \shop\helpers\ProductHelper::statusList(),
+                        'format' => 'raw',
                     ],
                 ],
             ]); ?>

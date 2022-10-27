@@ -232,6 +232,19 @@ class ProductManageService
         $this->products->save($product);
     }
 
+    public function activate($id)
+    {
+        $product = $this->products->get($id);
+        $product->activate();
+        $this->products->save($product);
+    }
+    public function draft($id)
+    {
+        $product = $this->products->get($id);
+        $product->draft();
+        $this->products->save($product);
+    }
+
     public function removeModification($id, $modificationId):void
     {
         $product = $this->products->get($id);

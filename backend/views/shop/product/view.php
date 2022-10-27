@@ -31,6 +31,23 @@ $this->params['breadcrumbs'][] = 'View';
                 'method' => 'post',
             ],
         ]) ?>
+        <?php if($product->isDraft()): ?>
+            <?= Html::a('Activate', ['activate', 'id' => $product->id], [
+                'class' => 'btn btn-success',
+                'data' => [
+                    'method' => 'post',
+                ],
+            ]) ?>
+        <?php else: ?>
+            <?= Html::a('Draft', ['draft', 'id' => $product->id], [
+                'class' => 'btn btn-warning',
+                'data' => [
+                    'method' => 'post',
+                ],
+            ]) ?>
+        <?php endif; ?>
+
+
     </p>
     <div class="row">
         <div class="col-md-6">
@@ -41,6 +58,13 @@ $this->params['breadcrumbs'][] = 'View';
                         'model' => $product,
                         'attributes' => [
                             'id',
+                            [
+                                'attribute' => 'status',
+                                'value' => function($model){
+                                    return \shop\helpers\ProductHelper::statusLabel($model->status);
+                                },
+                                'format' => 'raw',
+                            ],
                             [
                                 'attribute' => 'brand_id',
                                 'value' => ArrayHelper::getValue($product, 'brand.name'),

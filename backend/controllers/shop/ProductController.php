@@ -65,7 +65,7 @@ class ProductController extends Controller
 
         $modificationsProvider = new ActiveDataProvider([
             'query' => $product->getModifications()->orderBy('name'),
-            'key' => function(Modification $modification) use ($product){
+            'key' => function (Modification $modification) use ($product) {
                 return [
                     'product_id' => $product->id,
                     'id' => $modification->id,
@@ -74,7 +74,7 @@ class ProductController extends Controller
             'pagination' => false,
         ]);
         $photosForm = new PhotosForm();
-        if ($photosForm->load($this->request->post()) && $photosForm->validate()){
+        if ($photosForm->load($this->request->post()) && $photosForm->validate()) {
             try {
                 $this->service->addPhotos($product->id, $photosForm);
                 return $this->redirect(['view', 'id' => $product->id, '#' => 'photos']);
@@ -94,7 +94,7 @@ class ProductController extends Controller
     public function actionCreate()
     {
         $form = new ProductCreateForm();
-        if ($form->load($this->request->post()) && $form->validate()){
+        if ($form->load($this->request->post()) && $form->validate()) {
             try {
                 $product = $this->service->create($form);
                 return $this->redirect(['view', 'id' => $product->id]);
@@ -112,7 +112,7 @@ class ProductController extends Controller
     {
         $product = $this->findModel($id);
         $form = new ProductEditForm($product);
-        if ($form->load($this->request->post()) && $form->validate()){
+        if ($form->load($this->request->post()) && $form->validate()) {
             try {
                 $this->service->edit($product->id, $form);
                 return $this->redirect(['view', 'id' => $product->id]);
@@ -132,7 +132,7 @@ class ProductController extends Controller
     {
         $product = $this->findModel($id);
         $form = new PriceFom($product);
-        if ($form->load($this->request->post()) && $form->validate()){
+        if ($form->load($this->request->post()) && $form->validate()) {
             try {
                 $this->service->changePrice($product->id, $form);
                 return $this->redirect(['view', 'id' => $product->id]);
@@ -155,7 +155,7 @@ class ProductController extends Controller
             \Yii::$app->errorHandler->logException($e);
             \Yii::$app->session->setFlash('error', $e->getMessage());
         }
-        return $this->redirect(['view', 'id' => $id, '#' => 'photos']);
+        return $this->redirect(['index']);
     }
 
     public function actionDeletePhoto($id, $photo_id)
@@ -182,6 +182,28 @@ class ProductController extends Controller
         return $this->redirect(['view', 'id' => $id, '#' => 'photos']);
     }
 
+
+    public function actionActivate($id)
+    {
+        try {
+            $this->service->activate($id);
+        } catch (\DomainException $e) {
+            \Yii::$app->errorHandler->logException($e);
+            \Yii::$app->session->setFlash('error', $e->getMessage());
+        }
+        return $this->redirect(['view', 'id' => $id]);
+    }
+
+    public function actionDraft($id)
+    {
+        try {
+            $this->service->draft($id);
+        } catch (\DomainException $e) {
+            \Yii::$app->errorHandler->logException($e);
+            \Yii::$app->session->setFlash('error', $e->getMessage());
+        }
+        return $this->redirect(['view', 'id' => $id]);
+    }
 
 
     protected function findModel($id)

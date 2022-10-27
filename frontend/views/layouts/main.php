@@ -142,6 +142,7 @@ AppAsset::register($this);
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'About', 'url' => ['/about']],
             ['label' => 'Contact', 'url' => ['/contact']],
+            ['label' => 'Catalog', 'url' => ['/shop/catalog']],
         ];
 
         echo Nav::widget([          //nav navbar-nav
