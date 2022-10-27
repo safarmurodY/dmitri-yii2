@@ -39,7 +39,7 @@ class ProductReadRepository
     {
         return Product::find()->with('mainPhoto')->orderBy(['id' => SORT_DESC])->limit($limit)->all();
     }
-    public function find($id)
+    public function find($id) :?Product
     {
         return  Product::find()->active()->andWhere(['id' => $id])->one();
     }

@@ -29,6 +29,7 @@ use yii\web\UploadedFile;
  *
  * @property Meta $meta
  * @property Brand $brand
+ * @property Tag $tags
  * @property Category $category
  * @property CategoryAssignment[] $categoryAssignments
  * @property RelatedAssignment[] $relatedAssignments

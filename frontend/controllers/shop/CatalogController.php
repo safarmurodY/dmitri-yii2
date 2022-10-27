@@ -3,6 +3,8 @@
 namespace frontend\controllers\shop;
 
 use shop\entities\Shop\Product\Product;
+use shop\forms\shop\CartForm;
+use shop\forms\shop\ReviewForm;
 use shop\readModels\BrandReadRepository;
 use shop\readModels\CategoryReadRepository;
 use shop\readModels\ProductReadRepository;
@@ -106,8 +108,13 @@ class CatalogController extends Controller
         if (!$product = $this->products->find($id)) {
             throw new NotFoundHttpException('Not found');
         }
+        $this->layout = 'blank';
+        $orderForm = new CartForm($product);
+        $reviewForm = new ReviewForm();
         return $this->render('product', [
             'product' => $product,
+            'orderForm' => $orderForm,
+            'reviewForm' => $reviewForm,
         ]);
     }
 
