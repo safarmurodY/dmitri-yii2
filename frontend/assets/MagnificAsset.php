@@ -9,15 +9,16 @@ class MagnificAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'magnific/css/magnific-popup.css',
+        'magnific/magnific-popup.css',
     ];
     public $js = [
-        'magnific/js/jquery.magnific-popup.min.js',
+        'magnific/jquery.magnific-popup.min.js',
     ];
     public $cssOptions = [
         'media' => 'screen',
     ];
     public $depends = [
-        'yii\web\JqueryAsset'
+        'yii\web\JqueryAsset',
+        'yii\bootstrap\BootstrapPluginAsset'
     ];
 }

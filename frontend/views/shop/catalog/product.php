@@ -15,6 +15,12 @@ $this->registerMetaTag(['name' => 'keywords', 'content' => $product->meta->keywo
 
 $this->title = $product->name;
 $this->params['breadcrumbs'][] = ['label' => 'Catalog', 'url' => ['index']];
+foreach ($product->category->parents as $parent) {
+    if (!$parent->isRoot()){
+        $this->params['breadcrumbs'][] = ['label' => $parent->name, 'url' => ['category', 'id' => $parent->id]];
+    }
+}
+$this->params['breadcrumbs'][] = ['label' => $product->category->name, 'url' => ['category', 'id' => $product->category->id]];
 $this->params['breadcrumbs'][] = $this->title;
 MagnificAsset::register($this);
 ?>
@@ -183,47 +189,56 @@ MagnificAsset::register($this);
     </div>
 </div>
 <script type="text/javascript">
-    $('#review').delegate('.pagination a', 'click', function(e) {
-        e.preventDefault();
-
-        $('#review').fadeOut('slow');
-
-        $('#review').load(this.href);
-
-        $('#review').fadeIn('slow');
-    });
-
-    $('#review').load('index.php?route=product/product/review&product_id=42');
-
-    $('#button-review').on('click', function() {
-        $.ajax({
-            url: 'index.php?route=product/product/write&product_id=42',
-            type: 'post',
-            dataType: 'json',
-            data: $("#form-review").serialize(),
-            beforeSend: function() {
-                $('#button-review').button('loading');
-            },
-            complete: function() {
-                $('#button-review').button('reset');
-            },
-            success: function(json) {
-                $('.alert-dismissible').remove();
-
-                if (json['error']) {
-                    $('#review').after('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
-                }
-
-                if (json['success']) {
-                    $('#review').after('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
-
-                    $('input[name=\'name\']').val('');
-                    $('textarea[name=\'text\']').val('');
-                    $('input[name=\'rating\']:checked').prop('checked', false);
-                }
-            }
-        });
-    });
+    // $('#review').delegate('.pagination a', 'click', function(e) {
+    //     e.preventDefault();
+    //
+    //     $('#review').fadeOut('slow');
+    //
+    //     $('#review').load(this.href);
+    //
+    //     $('#review').fadeIn('slow');
+    // });
+    //
+    // $('#review').load('index.php?route=product/product/review&product_id=42');
+    //
+    // $('#button-review').on('click', function() {
+    //     $.ajax({
+    //         url: 'index.php?route=product/product/write&product_id=42',
+    //         type: 'post',
+    //         dataType: 'json',
+    //         data: $("#form-review").serialize(),
+    //         beforeSend: function() {
+    //             $('#button-review').button('loading');
+    //         },
+    //         complete: function() {
+    //             $('#button-review').button('reset');
+    //         },
+    //         success: function(json) {
+    //             $('.alert-dismissible').remove();
+    //
+    //             if (json['error']) {
+    //                 $('#review').after('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+    //             }
+    //
+    //             if (json['success']) {
+    //                 $('#review').after('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+    //
+    //                 $('input[name=\'name\']').val('');
+    //                 $('textarea[name=\'text\']').val('');
+    //                 $('input[name=\'rating\']:checked').prop('checked', false);
+    //             }
+    //         }
+    //     });
+    // });
+    // $(document).ready(function() {
+    // $('.thumbnails').magnificPopup({
+    //     type:'image',
+    //     delegate: 'a',
+    //     gallery: {
+    //         enabled: true
+    //     }
+    // });
+    // });
 
 </script>
 <?php
