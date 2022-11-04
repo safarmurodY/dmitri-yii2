@@ -34,11 +34,9 @@ class CategoryUrlRule extends BaseObject implements UrlRuleInterface
             $path = $matches['1'];
 
             $result = $this->cache->getOrSet(['category_route', 'path' => $path], function () use ($path) {
-
                 if (!$category = $this->repository->findBySlug($this->getPathSlug($path))) {
                     return ['id' => null, 'path' => null];
                 }
-
                 return ['id' => $category->id, 'path' => $this->getCategoryPath($category)];
             }, null, new TagDependency(['tags' => ['category']]));
 
@@ -50,7 +48,7 @@ class CategoryUrlRule extends BaseObject implements UrlRuleInterface
                 throw new UrlNormalizerRedirectException(['shop/catalog/category', 'id' => $result['id']], 301);
             }
 
-            return ['shop/catalog/category', 'id' => $result['id']];
+            return ['shop/catalog/category', ['id' => $result['id']]];
         }
         return false;
     }
