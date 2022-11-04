@@ -22,6 +22,7 @@ foreach ($product->category->parents as $parent) {
 }
 $this->params['breadcrumbs'][] = ['label' => $product->category->name, 'url' => ['category', 'id' => $product->category->id]];
 $this->params['breadcrumbs'][] = $this->title;
+$this->params['active_category'] = $product->category;
 MagnificAsset::register($this);
 ?>
 <div class="row">
@@ -30,14 +31,14 @@ MagnificAsset::register($this);
             <?php foreach($product->photos as $i => $photo): ?>
                 <?php if($i == 0): ?>
                     <li>
-                        <a class="thumbnail" href="<?= $photo->getUploadedFileUrl('file') ?>" title="s">
+                        <a class="thumbnail" href="<?= $photo->getThumbFileUrl('file', 'catalog_origin') ?>" title="s">
                             <img src="<?= $photo->getThumbFileUrl('file', 'catalog_product_main') ?>"
                                  title="<?= Html::encode($product->name) ?>" alt="<?= Html::encode($product->name) ?>">
                         </a>
                     </li>
                 <?php else: ?>
                     <li class="image-additional">
-                        <a class="thumbnail" href="<?= $photo->getUploadedFileUrl('file') ?>" title="s">
+                        <a class="thumbnail" href="<?= $photo->getThumbFileUrl('file', 'catalog_origin') ?>" title="s">
                             <img src="<?= $photo->getThumbFileUrl('file', 'catalog_product_additional') ?>"
                                  title="<?= Html::encode($product->name) ?>" alt="<?= Html::encode($product->name) ?>">
                         </a>

@@ -4,6 +4,7 @@ namespace shop\repositories\Shop;
 
 use shop\entities\Shop\Category;
 use shop\repositories\NotFoundException;
+use yii\caching\TagDependency;
 use yii\db\StaleObjectException;
 
 class CategoryRepository
@@ -21,6 +22,7 @@ class CategoryRepository
         if (!$category->save()){
             throw new \RuntimeException('Category not saved');
         }
+        TagDependency::invalidate(\Yii::$app->cache, ['category']);
     }
 
     /**

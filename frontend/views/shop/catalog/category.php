@@ -5,7 +5,7 @@
 
 use yii\helpers\Html;
 
-$this->title = $category->getSeoTile();
+$this->title = $category->getSeoTitle();
 $this->registerMetaTag(['name' => 'description', 'content' => $category->meta->description]);
 $this->registerMetaTag(['name' => 'keywords', 'content' => $category->meta->keywords]);
 
@@ -16,8 +16,9 @@ foreach ($category->parents as $parent) {
     }
 }
 $this->params['breadcrumbs'][] = $category->name;
+$this->params['active_category'] = $category;
 ?>
-<h1><?= Html::encode($category->getHeadingTile()) ?></h1>
+<h1><?= Html::encode($category->getHeadingTitle()) ?></h1>
 
 <?= $this->render('_subcategories', [
     'category' => $category

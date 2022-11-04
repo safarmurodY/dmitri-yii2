@@ -18,8 +18,8 @@ return [
     'components' => [
         'cache' => [
 
-            'class' => 'yii\caching\MemCache',
-            'useMemcached' => true,
+            'class' => 'yii\caching\FileCache',
+            'cachePath' => '@common/runtime/cache',
         ],
 
     ],

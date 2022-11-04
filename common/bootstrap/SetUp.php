@@ -2,7 +2,10 @@
 
 namespace common\bootstrap;
 
+use frontend\urls\CategoryUrlRule;
+use shop\readModels\CategoryReadRepository;
 use shop\services\ContactService;
+use yii\di\Instance;
 use yii\mail\MailerInterface;
 
 class SetUp implements \yii\base\BootstrapInterface
@@ -13,20 +16,21 @@ class SetUp implements \yii\base\BootstrapInterface
     public function bootstrap($app)
     {
         $container = \Yii::$container;
-//        $container->setSingleton(PasswordResetService::class);
-        $container->setSingleton(MailerInterface::class, function () use ($app){
+
+        $container->setSingleton(MailerInterface::class, function () use ($app) {
             return $app->mailer;
+        });
+        $container->setSingleton('cache', function () use ($app) {
+            return $app->cache;
         });
 
         $container->setSingleton(ContactService::class, [], [
             $app->params['adminEmail'],
-//            Instance::of(MailerInterface::class)
         ]);
-//        $container->setSingleton(PasswordResetService::class, function () use ($app) {
-//            return new PasswordResetService([\Yii::$app->params['supportEmail'] => \Yii::$app->name . ' robot']);
-//        });
 
-
-//        $container->setSingleton()
+        $container->set(CategoryUrlRule::class, [], [
+            Instance::of(CategoryReadRepository::class),
+            Instance::of('cache'),
+        ]);
     }
 }
