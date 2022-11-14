@@ -12,6 +12,10 @@ class CategoryReadRepository
         return Category::find()->roots()->one();
     }
 
+    /**
+     * @param $id
+     * @return Category|array|\yii\db\ActiveRecord|null
+     */
     public function find($id)
     {
         return Category::find()->andWhere(['id' => $id])->andWhere(['>', 'depth', 0])->one();

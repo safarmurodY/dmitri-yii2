@@ -11,11 +11,12 @@ class FeaturedProductsWidget extends Widget
 
     private $repository;
 
-    public function __construct( ProductReadRepository $repository, $config = [])
+    public function __construct(ProductReadRepository $repository, $config = [])
     {
         parent::__construct($config);
         $this->repository = $repository;
     }
+
     public function run()
     {
         return $this->render('featured', [

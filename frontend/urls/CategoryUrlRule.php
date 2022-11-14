@@ -92,7 +92,6 @@ class CategoryUrlRule extends BaseObject implements UrlRuleInterface
 
     private function getCategoryPath($category)
     {
-
         $chunks = ArrayHelper::getColumn($category->getParents()->andWhere(['>', 'depth', 0])->all(), 'slug');
         $chunks[] = $category->slug;
         return implode('/', $chunks);
