@@ -1,6 +1,7 @@
 <?php
 
 use yii\db\Migration;
+use yii\helpers\Json;
 
 /**
  * Class m220912_110504_create_filler
@@ -12,7 +13,7 @@ class m290000_000000_create_filler extends Migration
      */
     public function safeUp()
     {
-//authority category
+
         $js_file = file_get_contents(__DIR__ . '/filler/user.json');
 
         $js_data = json_decode($js_file, true);
@@ -87,6 +88,148 @@ class m290000_000000_create_filler extends Migration
                 )
                 ->execute();
             echo '~~~~~~~~~~~~~~~~~~~~' . $insertCount . " User Networks  inserted ~~~~~~~~~~~~\n";
+        }
+        /****************** Shop brands ****************/
+
+        $js_file = file_get_contents(__DIR__ . '/filler/shop_brands.json');
+
+        $js_data = json_decode($js_file, true);
+
+        $bulkInsertArray = array();
+        foreach ($js_data as $datum) {
+            $bulkInsertArray[] = [
+                'id' => $datum['id'],
+                'name' => $datum['name'],
+                'slug' => $datum['slug'],
+                'meta_json' => Json::encode($datum['meta_json']),
+            ];
+        }
+        $tableName = 'shop_brands';
+
+        if (count($bulkInsertArray) > 0) {
+            $columnNameArray = [
+                'id',
+                'name',
+                'slug',
+                'meta_json',
+            ];
+            // below line insert all your record and return number of rows inserted
+            $insertCount = Yii::$app->db->createCommand()
+                ->batchInsert(
+                    $tableName, $columnNameArray, $bulkInsertArray
+                )
+                ->execute();
+            echo '~~~~~~~~~~~~~~~~~~~~' . $insertCount . " Brands  inserted ~~~~~~~~~~~~\n";
+        }
+        /****************** Shop categories ****************/
+
+        $js_file = file_get_contents(__DIR__ . '/filler/shop_categories.json');
+
+        $js_data = json_decode($js_file, true);
+
+        $bulkInsertArray = array();
+        foreach ($js_data as $datum) {
+            $bulkInsertArray[] = [
+                'id' => $datum['id'],
+                'name' => $datum['name'],
+                'slug' => $datum['slug'],
+                'title' => $datum['title'],
+                'description' => $datum['description'],
+                'meta_json' => Json::encode($datum['meta_json']),
+                'left' => $datum['left'],
+                'right' => $datum['right'],
+                'depth' => $datum['depth'],
+            ];
+        }
+        $tableName = 'shop_categories';
+
+        if (count($bulkInsertArray) > 0) {
+            $columnNameArray = [
+                'id',
+                'name',
+                'slug',
+                'title',
+                'description',
+                'meta_json',
+                'left',
+                'right',
+                'depth',
+            ];
+            // below line insert all your record and return number of rows inserted
+            $insertCount = Yii::$app->db->createCommand()
+                ->batchInsert(
+                    $tableName, $columnNameArray, $bulkInsertArray
+                )
+                ->execute();
+            echo '~~~~~~~~~~~~~~~~~~~~' . $insertCount . " Categories  inserted ~~~~~~~~~~~~\n";
+        }
+        /****************** Shop characteristics ****************/
+
+        $js_file = file_get_contents(__DIR__ . '/filler/shop_characteristics.json');
+
+        $js_data = json_decode($js_file, true);
+
+        $bulkInsertArray = array();
+        foreach ($js_data as $datum) {
+            $bulkInsertArray[] = [
+                'id' => $datum['id'],
+                'name' => $datum['name'],
+                'type' => $datum['type'],
+                'required' => $datum['required'],
+                'default' => $datum['default'],
+                'variants_json' => Json::encode($datum['variants_json']),
+                'sort' => $datum['sort'],
+            ];
+        }
+        $tableName = 'shop_characteristics';
+
+        if (count($bulkInsertArray) > 0) {
+            $columnNameArray = [
+                'id',
+                'name',
+                'type',
+                'required',
+                'default',
+                'variants_json',
+                'sort',
+            ];
+            // below line insert all your record and return number of rows inserted
+            $insertCount = Yii::$app->db->createCommand()
+                ->batchInsert(
+                    $tableName, $columnNameArray, $bulkInsertArray
+                )
+                ->execute();
+            echo '~~~~~~~~~~~~~~~~~~~~' . $insertCount . " Characteristics  inserted ~~~~~~~~~~~~\n";
+        }
+        /****************** Shop Tags ****************/
+
+        $js_file = file_get_contents(__DIR__ . '/filler/shop_tags.json');
+
+        $js_data = json_decode($js_file, true);
+
+        $bulkInsertArray = array();
+        foreach ($js_data as $datum) {
+            $bulkInsertArray[] = [
+                'id' => $datum['id'],
+                'name' => $datum['name'],
+                'slug' => $datum['slug'],
+            ];
+        }
+        $tableName = 'shop_tags';
+
+        if (count($bulkInsertArray) > 0) {
+            $columnNameArray = [
+                'id',
+                'name',
+                'slug',
+            ];
+            // below line insert all your record and return number of rows inserted
+            $insertCount = Yii::$app->db->createCommand()
+                ->batchInsert(
+                    $tableName, $columnNameArray, $bulkInsertArray
+                )
+                ->execute();
+            echo '~~~~~~~~~~~~~~~~~~~~' . $insertCount . " Tags  inserted ~~~~~~~~~~~~\n";
         }
 
 

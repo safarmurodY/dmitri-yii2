@@ -27,7 +27,8 @@
         "paulzi/yii2-nested-sets": "^1.1",
         "yii-dream-team/yii2-upload-behavior": "*",
         "bower-asset/font-awesome": "^6.2",
-      "ext-gd": "*"
+      "ext-gd": "*",
+        "elasticsearch/elasticsearch": "^8.5"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

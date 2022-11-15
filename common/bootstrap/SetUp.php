@@ -2,6 +2,8 @@
 
 namespace common\bootstrap;
 
+use Elastic\Elasticsearch\Client;
+use Elastic\Elasticsearch\ClientBuilder;
 use frontend\urls\CategoryUrlRule;
 use shop\readModels\CategoryReadRepository;
 use shop\services\ContactService;
@@ -16,6 +18,10 @@ class SetUp implements \yii\base\BootstrapInterface
     public function bootstrap($app)
     {
         $container = \Yii::$container;
+
+        $container->setSingleton(Client::class, function () use ($app){
+            return ClientBuilder::create()->build();
+        });
 
         $container->setSingleton(MailerInterface::class, function () use ($app) {
             return $app->mailer;

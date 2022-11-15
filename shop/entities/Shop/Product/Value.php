@@ -8,7 +8,7 @@ use yii\db\ActiveRecord;
 
 /**
  * @property integer $characteristic_id
- * @property integer $value
+ * @property integer|string $value
  *
  * @property Characteristic $characteristic
  */

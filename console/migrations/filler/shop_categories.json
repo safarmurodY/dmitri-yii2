@@ -1,0 +1,90 @@
+[
+  {
+    "id": 2,
+    "name": "Computers",
+    "slug": "comp",
+    "title": "Computer",
+    "description": null,
+    "meta_json": "{\"title\":\"\",\"description\":\"\",\"keywords\":\"\"}",
+    "left": 4,
+    "right": 17,
+    "depth": 1
+  },
+  {
+    "id": 3,
+    "name": "Notebooks",
+    "slug": "notebooks",
+    "title": "All notebooks",
+    "description": null,
+    "meta_json": "{\"title\":\"\",\"description\":\"\",\"keywords\":\"\"}",
+    "left": 9,
+    "right": 16,
+    "depth": 2
+  },
+  {
+    "id": 4,
+    "name": "Gamer Notebook",
+    "slug": "gamer-notebooks",
+    "title": "Gaming notebooks",
+    "description": null,
+    "meta_json": "{\"title\":\"\",\"description\":\"\",\"keywords\":\"\"}",
+    "left": 10,
+    "right": 11,
+    "depth": 3
+  },
+  {
+    "id": 5,
+    "name": "Budget Notebooks",
+    "slug": "budget-notebooks",
+    "title": "Budget",
+    "description": null,
+    "meta_json": "{\"title\":\"\",\"description\":\"\",\"keywords\":\"\"}",
+    "left": 12,
+    "right": 13,
+    "depth": 3
+  },
+  {
+    "id": 6,
+    "name": "Desktop computers",
+    "slug": "desktop-computers",
+    "title": "Desktop Computers",
+    "description": null,
+    "meta_json": "{\"title\":\"\",\"description\":\"\",\"keywords\":\"\"}",
+    "left": 5,
+    "right": 8,
+    "depth": 2
+  },
+  {
+    "id": 7,
+    "name": "Printers",
+    "slug": "printers",
+    "title": "Printers",
+    "description": null,
+    "meta_json": "{\"title\":\"\",\"description\":\"\",\"keywords\":\"\"}",
+    "left": 2,
+    "right": 3,
+    "depth": 1
+  },
+  {
+    "id": 8,
+    "name": "Home computers",
+    "slug": "home-computers",
+    "title": "Home computers",
+    "description": null,
+    "meta_json": "{\"title\":\"\",\"description\":\"\",\"keywords\":\"\"}",
+    "left": 6,
+    "right": 7,
+    "depth": 3
+  },
+  {
+    "id": 9,
+    "name": "Expensive notebooks",
+    "slug": "expensive-notebooks",
+    "title": "Expensive notebooks",
+    "description": null,
+    "meta_json": "{\"title\":\"\",\"description\":\"\",\"keywords\":\"\"}",
+    "left": 14,
+    "right": 15,
+    "depth": 3
+  }
+]

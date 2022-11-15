@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "Color",
+    "type": "string",
+    "required": 1,
+    "default": "Black",
+    "variants_json": "[\"Black\",\"White\",\"Green\",\"Blue\",\"Yellow\",\"\"]",
+    "sort": 1
+  },
+  {
+    "id": 2,
+    "name": "Weight",
+    "type": "integer",
+    "required": 0,
+    "default": "1",
+    "variants_json": "[\"\"]",
+    "sort": 2
+  }
+]

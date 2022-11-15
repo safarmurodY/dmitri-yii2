@@ -63,6 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="box-body">
             <?php foreach ($model->values as $i => $value): ?>
                 <?php if ($variants = $value->variantsList()): ?>
+
                     <?= $form->field($value, '[' . $i . ']value')->dropdownList($variants, ['prompts' => '']) ?>
                 <?php else: ?>
                     <?= $form->field($value, '[' . $i . ']value')->textInput() ?>

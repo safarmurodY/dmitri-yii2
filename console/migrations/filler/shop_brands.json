@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "Lg",
+    "slug": "lg",
+    "meta_json": "{\"title\":\"\",\"description\":\"\",\"keywords\":\"\"}"
+  },
+  {
+    "id": 2,
+    "name": "Samsung",
+    "slug": "samsung",
+    "meta_json": "{\"title\":\"\",\"description\":\"\",\"keywords\":\"\"}"
+  },
+  {
+    "id": 3,
+    "name": "Apple",
+    "slug": "apple",
+    "meta_json": "{\"title\":\"\",\"description\":\"\",\"keywords\":\"\"}"
+  },
+  {
+    "id": 4,
+    "name": "Lenova",
+    "slug": "lenova",
+    "meta_json": "{\"title\":\"\",\"description\":\"\",\"keywords\":\"\"}"
+  },
+  {
+    "id": 5,
+    "name": "Acer",
+    "slug": "acer",
+    "meta_json": "{\"title\":\"\",\"description\":\"\",\"keywords\":\"\"}"
+  }
+]
